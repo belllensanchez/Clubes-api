@@ -232,7 +232,11 @@ namespace TrabajoProyecto.Controllers
 
             catch (Exception ex)
             {
-                return StatusCode(500, new ErrorResponse { ErrorCode = "500", Message = "Ocurrió un error inesperado al eliminar el Dirigente." });
+                return StatusCode(500, new ErrorResponse
+                {
+                    ErrorCode = "500",
+                    Message = "Ocurrió un error inesperado al eliminar el Socio."
+                });
             }
         }
 
