@@ -122,7 +122,35 @@ namespace TrabajoProyecto.Controllers
 
             try { 
             using var cn = OpenConn(connexionString);
-            var cmd = new SqlCommand(query, cn);
+
+                if (club.FechaFundacion > DateTime.Now)
+                {
+                    return BadRequest(new Responses
+                    {
+                        Code = "400",
+                        Message = "La fecha de fundación no puede ser futura."
+                    });
+                }
+
+                if (club.CantidadSocios < 0)
+                {
+                    return BadRequest(new Responses
+                    {
+                        Code = "400",
+                        Message = "La cantidad de socios no puede ser negativa."
+                    });
+                }
+
+                if (club.CantidadTitulos < 0)
+                {
+                    return BadRequest(new Responses
+                    {
+                        Code = "400",
+                        Message = "La cantidad de títulos no puede ser negativa."
+                    });
+                }
+
+                var cmd = new SqlCommand(query, cn);
             cmd.Parameters.Add("@nombre", System.Data.SqlDbType.VarChar).Value = club.Nombre;
             cmd.Parameters.Add("@cantidadsocios", System.Data.SqlDbType.Int).Value = club.CantidadSocios;
             cmd.Parameters.Add("@cantidadtitulos", System.Data.SqlDbType.Int).Value = club.CantidadTitulos;;
@@ -147,7 +175,7 @@ namespace TrabajoProyecto.Controllers
                 
 
                 // Return a generic, non-technical error to the client.
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error inesperado al procesar la solicitud.");
+                return StatusCode(500, new { error = ex.Message });
             }
 
 
@@ -177,6 +205,34 @@ namespace TrabajoProyecto.Controllers
             try
             {
                 using var cn = OpenConn(connexionString);
+
+                if (club.FechaFundacion > DateTime.Now)
+                {
+                    return BadRequest(new Responses
+                    {
+                        Code = "400",
+                        Message = "La fecha de fundación no puede ser futura."
+                    });
+                }
+
+                if (club.CantidadSocios < 0)
+                {
+                    return BadRequest(new Responses
+                    {
+                        Code = "400",
+                        Message = "La cantidad de socios no puede ser negativa."
+                    });
+                }
+
+                if (club.CantidadTitulos < 0)
+                {
+                    return BadRequest(new Responses
+                    {
+                        Code = "400",
+                        Message = "La cantidad de títulos no puede ser negativa."
+                    });
+                }
+
                 var cmd = new SqlCommand(query, cn);
 
                 // Se deben asignar TODOS los parámetros del objeto Club
@@ -211,10 +267,10 @@ namespace TrabajoProyecto.Controllers
         }
 
 
+        // DELETE api/<ClubController>/5
 
-
-        [HttpDelete("{clubeId}")]
-        public IActionResult DeleteCLub(int clubID)
+        [HttpDelete("{clubID}")]
+        public IActionResult DeleteClub(int clubID)
         {
             const string query = "DELETE FROM [dbo].[Club] WHERE [ClubId] = @clubId";
 

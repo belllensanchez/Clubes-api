@@ -68,7 +68,7 @@ namespace TrabajoProyecto.Controllers
         }
 
 
-        // GET api/<DiringeteController>/5
+        // GET api/<DirigenteController>/5
 
         [HttpGet("{dirigenteId}")]
         public ActionResult<Dirigente> Get(int dirigenteId)
@@ -108,7 +108,7 @@ namespace TrabajoProyecto.Controllers
 
 
 
-        // POST api/<ClubController>
+        // POST api/<DirigenteController>
         [HttpPost]
         [Route("CreateDirigente")]
         public ActionResult<Dirigente> dirigente([FromBody] Dirigente dirigente)
@@ -126,6 +126,34 @@ namespace TrabajoProyecto.Controllers
             try
             {
                 using var cs = OpenConn(connexionString);
+
+                if (string.IsNullOrWhiteSpace(dirigente.Nombre))
+                {
+                    return BadRequest(new Responses
+                    {
+                        Code = "400",
+                        Message = "El nombre del dirigente no puede estar vacío."
+                    });
+                }
+
+                if (dirigente.FechaNacimiento > DateTime.Now)
+                {
+                    return BadRequest(new Responses
+                    {
+                        Code = "400",
+                        Message = "La fecha de nacimiento no puede ser futura."
+                    });
+                }
+
+                if (dirigente.Dni <= 0)
+                {
+                    return BadRequest(new Responses
+                    {
+                        Code = "400",
+                        Message = "El DNI debe ser un número válido mayor a cero."
+                    });
+                }
+
                 var cmd = new SqlCommand(query, cs);
                 cmd.Parameters.Add("@clubid", System.Data.SqlDbType.Int).Value = dirigente.ClubId;
                 cmd.Parameters.Add("@nombre", System.Data.SqlDbType.VarChar).Value = dirigente.Nombre;
@@ -150,21 +178,23 @@ namespace TrabajoProyecto.Controllers
             {
 
 
-                // Return a generic, non-technical error to the client.
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error inesperado al procesar la solicitud.");
+               
+                return StatusCode(500, new { error = ex.Message });
             }
+
+        
 
 
         }
 
-        // PUT api/<ClubController>/5
+        // PUT api/<DirigenteController>/5
         [HttpPut("{id}")]
         public IActionResult PutDirigente(int id, [FromBody] Dirigente dirigente)
         {
             // 1. Verificar que el ID de la ruta coincida con el ID del objeto
             if (id != dirigente.DirigenteId)
             {
-                return BadRequest(new ErrorResponse {  ErrorCode= "400", Message = "El ID de la ruta no coincide con el ID del Club en el cuerpo de la petición." });
+                return BadRequest(new ErrorResponse {  ErrorCode= "400", Message = "El ID de la ruta no coincide con el ID del Dirigente en el cuerpo de la petición." });
             }
 
             // 2. Definir la consulta SQL de ACTUALIZACIÓN
@@ -181,6 +211,39 @@ namespace TrabajoProyecto.Controllers
             {
                 using (var cn = OpenConn(connexionString))
                 {
+
+                    // Validación de fecha de nacimiento
+                    if (dirigente.FechaNacimiento > DateTime.Now)
+                    {
+                        return BadRequest(new ErrorResponse
+                        {
+                            ErrorCode = "400",
+                            Message = "La fecha de nacimiento no puede ser futura."
+                        });
+                    }
+
+                // Validación de DNI
+                if (dirigente.Dni <= 0)
+                {
+                    return BadRequest(new ErrorResponse
+                    {
+                        ErrorCode = "400",
+                        Message = "El DNI debe ser un número válido mayor a cero."
+                    });
+                }
+
+                // Validación de campos obligatorios
+                if (string.IsNullOrWhiteSpace(dirigente.Nombre) ||
+                    string.IsNullOrWhiteSpace(dirigente.Apellido) ||
+                    string.IsNullOrWhiteSpace(dirigente.Rol))
+                {
+                    return BadRequest(new ErrorResponse
+                    {
+                        ErrorCode = "400",
+                        Message = "Nombre, apellido y rol son obligatorios."
+                    });
+                }
+                
                     var cmd = new SqlCommand(query, cn);
                     cmd.Parameters.Add("@dirigenteid", System.Data.SqlDbType.Int).Value = dirigente.DirigenteId;
                     cmd.Parameters.Add("@clubid", System.Data.SqlDbType.Int).Value = dirigente.ClubId;
@@ -195,11 +258,11 @@ namespace TrabajoProyecto.Controllers
 
                     if (rowsAffected > 0)
                     {
-                        return Ok(new Responses { Code = "200", Message = $"Se actualizó el Club con ID {id} correctamente." });
+                        return Ok(new Responses { Code = "200", Message = $"Se actualizó el Dirigente con ID {id} correctamente." });
                     }
                     else
                     {
-                        return NotFound(new ErrorResponse { ErrorCode = "404", Message = $"No se encontró el Club con ID {id} para actualizar." });
+                        return NotFound(new ErrorResponse { ErrorCode = "404", Message = $"No se encontró el Dirigente con ID {id} para actualizar." });
                     }
                 }
 
@@ -207,11 +270,14 @@ namespace TrabajoProyecto.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ErrorResponse { ErrorCode= "500", Message = "Ocurrió un error inesperado al actualizar el Club." });
+                return StatusCode(500, new { error = ex.Message });
+
             }
         }
 
 
+
+        // DELETE api/<DirigenteController>/5
 
         [HttpDelete("{dirigenteId}")]
         public IActionResult DeleteDirigente(int dirigenteId)
@@ -244,7 +310,7 @@ namespace TrabajoProyecto.Controllers
             
             catch (Exception ex)
             {
-                return StatusCode(500, new ErrorResponse { ErrorCode = "500", Message = "Ocurrió un error inesperado al eliminar el Dirigente." });
+                return StatusCode(500, new { error = ex.Message });
             }
         }
 

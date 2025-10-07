@@ -64,7 +64,7 @@ namespace TrabajoProyecto.Controllers
             return ls;
 
         }
-
+        // GET api/<SocioController>/5
 
         [HttpGet("{socioId}")]
         public ActionResult<Socio> Get(int socioId)
@@ -99,11 +99,28 @@ namespace TrabajoProyecto.Controllers
             }
         }
 
-
+        // POST api/<SocioController>
         [HttpPost]
         [Route("CreateSocio")]
         public ActionResult<Socio> CreateSocio([FromBody] Socio socio) 
         {
+            if (socio.CantidadAsistencias < 0)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorCode = "400",
+                    Message = "La cantidad de asistencias no puede ser negativa."
+                });
+            }
+
+            if (socio.FechaAsociado < socio.FechaNacimiento)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorCode = "400",
+                    Message = "La fecha de asociación no puede ser anterior a la fecha de nacimiento."
+                });
+            }
             const string query = @"INSERT INTO [dbo].[Socio]
             ([ClubId]
             ,[Nombre]
@@ -155,6 +172,33 @@ namespace TrabajoProyecto.Controllers
                 return BadRequest(new ErrorResponse { ErrorCode = "400", Message = "El SocioId  no coincide con el ID de un socio." });
             }
 
+            if (socio.FechaNacimiento > DateTime.Now)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorCode = "400",
+                    Message = "La fecha de nacimiento no puede ser futura."
+                });
+            }
+
+            if (socio.CantidadAsistencias < 0)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorCode = "400",
+                    Message = "La cantidad de asistencias no puede ser negativa."
+                });
+            }
+
+            if (socio.FechaAsociado < socio.FechaNacimiento)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorCode = "400",
+                    Message = "La fecha de asociación no puede ser anterior a la fecha de nacimiento."
+                });
+            }
+
             const string query = @"UPDATE [dbo].[Socio] SET
         [ClubId] = @clubid,
         [Nombre] = @nombre,
@@ -184,7 +228,7 @@ namespace TrabajoProyecto.Controllers
 
                     if (rowsAffected > 0)
                     {
-                        return Ok(new Responses { Code = "200", Message = $"Se actualizó el Club con ID {id} correctamente." });
+                        return Ok(new Responses { Code = "200", Message = $"Se actualizó el Socio con ID {id} correctamente." });
                     }
                     else
                     {
@@ -196,11 +240,11 @@ namespace TrabajoProyecto.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ErrorResponse { ErrorCode = "500", Message = "Ocurrió un error inesperado al actualizar el Club." });
+                return StatusCode(500, new ErrorResponse { ErrorCode = "500", Message = "Ocurrió un error inesperado al actualizar el socio." });
             }
         }
 
-
+        // DELETE api/<SocioController>/5
         [HttpDelete("{socioId}")]
         public IActionResult DeleteSocio(int socioId)
         {
@@ -218,11 +262,11 @@ namespace TrabajoProyecto.Controllers
 
                     if (rowsAffected > 0)
                     {
-                        return Ok(new Responses { Code = "200", Message = $"Se eliminó el Dirigente con ID {socioId} correctamente." });
+                        return Ok(new Responses { Code = "200", Message = $"Se eliminó el socio con ID {socioId} correctamente." });
                     }
                     else
                     {
-                        return NotFound(new ErrorResponse { ErrorCode = "404", Message = $"No se encontró el Dirigente con ID {socioId} para eliminar." });
+                        return NotFound(new ErrorResponse { ErrorCode = "404", Message = $"No se encontró el socio con ID {socioId} para eliminar." });
                     }
 
                 }
