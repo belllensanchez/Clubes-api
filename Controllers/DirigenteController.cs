@@ -68,7 +68,7 @@ namespace TrabajoProyecto.Controllers
         }
 
 
-        // GET api/<DiringeteController>/5
+        // GET api/<DirigenteController>/5
 
         [HttpGet("{dirigenteId}")]
         public ActionResult<Dirigente> Get(int dirigenteId)
@@ -108,7 +108,7 @@ namespace TrabajoProyecto.Controllers
 
 
 
-        // POST api/<ClubController>
+        // POST api/<DirigenteController>
         [HttpPost]
         [Route("CreateDirigente")]
         public ActionResult<Dirigente> dirigente([FromBody] Dirigente dirigente)
@@ -187,7 +187,7 @@ namespace TrabajoProyecto.Controllers
 
         }
 
-        // PUT api/<ClubController>/5
+        // PUT api/<DirigenteController>/5
         [HttpPut("{id}")]
         public IActionResult PutDirigente(int id, [FromBody] Dirigente dirigente)
         {
@@ -277,7 +277,7 @@ namespace TrabajoProyecto.Controllers
 
 
 
-        // DELETE api/<ClubController>/5
+        // DELETE api/<DirigenteController>/5
 
         [HttpDelete("{dirigenteId}")]
         public IActionResult DeleteDirigente(int dirigenteId)

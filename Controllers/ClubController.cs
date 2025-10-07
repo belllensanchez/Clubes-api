@@ -132,6 +132,24 @@ namespace TrabajoProyecto.Controllers
                     });
                 }
 
+                if (club.CantidadSocios < 0)
+                {
+                    return BadRequest(new Responses
+                    {
+                        Code = "400",
+                        Message = "La cantidad de socios no puede ser negativa."
+                    });
+                }
+
+                if (club.CantidadTitulos < 0)
+                {
+                    return BadRequest(new Responses
+                    {
+                        Code = "400",
+                        Message = "La cantidad de títulos no puede ser negativa."
+                    });
+                }
+
                 var cmd = new SqlCommand(query, cn);
             cmd.Parameters.Add("@nombre", System.Data.SqlDbType.VarChar).Value = club.Nombre;
             cmd.Parameters.Add("@cantidadsocios", System.Data.SqlDbType.Int).Value = club.CantidadSocios;
@@ -194,6 +212,24 @@ namespace TrabajoProyecto.Controllers
                     {
                         Code = "400",
                         Message = "La fecha de fundación no puede ser futura."
+                    });
+                }
+
+                if (club.CantidadSocios < 0)
+                {
+                    return BadRequest(new Responses
+                    {
+                        Code = "400",
+                        Message = "La cantidad de socios no puede ser negativa."
+                    });
+                }
+
+                if (club.CantidadTitulos < 0)
+                {
+                    return BadRequest(new Responses
+                    {
+                        Code = "400",
+                        Message = "La cantidad de títulos no puede ser negativa."
                     });
                 }
 

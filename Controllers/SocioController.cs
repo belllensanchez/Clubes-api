@@ -64,7 +64,7 @@ namespace TrabajoProyecto.Controllers
             return ls;
 
         }
-
+        // GET api/<SocioController>/5
 
         [HttpGet("{socioId}")]
         public ActionResult<Socio> Get(int socioId)
@@ -104,6 +104,23 @@ namespace TrabajoProyecto.Controllers
         [Route("CreateSocio")]
         public ActionResult<Socio> CreateSocio([FromBody] Socio socio) 
         {
+            if (socio.CantidadAsistencias < 0)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorCode = "400",
+                    Message = "La cantidad de asistencias no puede ser negativa."
+                });
+            }
+
+            if (socio.FechaAsociado < socio.FechaNacimiento)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorCode = "400",
+                    Message = "La fecha de asociación no puede ser anterior a la fecha de nacimiento."
+                });
+            }
             const string query = @"INSERT INTO [dbo].[Socio]
             ([ClubId]
             ,[Nombre]
@@ -164,6 +181,23 @@ namespace TrabajoProyecto.Controllers
                 });
             }
 
+            if (socio.CantidadAsistencias < 0)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorCode = "400",
+                    Message = "La cantidad de asistencias no puede ser negativa."
+                });
+            }
+
+            if (socio.FechaAsociado < socio.FechaNacimiento)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    ErrorCode = "400",
+                    Message = "La fecha de asociación no puede ser anterior a la fecha de nacimiento."
+                });
+            }
 
             const string query = @"UPDATE [dbo].[Socio] SET
         [ClubId] = @clubid,
