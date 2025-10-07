@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("TrabajoProyecto")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("ClubesApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9b80d46658811db2ed38a9a8ad9be94c837fec08")]
-[assembly: System.Reflection.AssemblyProductAttribute("TrabajoProyecto")]
-[assembly: System.Reflection.AssemblyTitleAttribute("TrabajoProyecto")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2e6e282b926737ea7c33ddc587aad2373bb509a")]
+[assembly: System.Reflection.AssemblyProductAttribute("ClubesApi")]
+[assembly: System.Reflection.AssemblyTitleAttribute("ClubesApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Generado por la clase WriteCodeFragment de MSBuild.

@@ -2056,11 +2056,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Belen\\OneDrive\\Desktop\\RepoNuevo\\TrabajoProyecto\\TrabajoProyecto.csproj",
-      "projectName": "TrabajoProyecto",
-      "projectPath": "C:\\Users\\Belen\\OneDrive\\Desktop\\RepoNuevo\\TrabajoProyecto\\TrabajoProyecto.csproj",
+      "projectUniqueName": "C:\\Users\\Belen\\OneDrive\\Desktop\\RepoNuevo\\Clubes-api\\TrabajoProyecto.csproj",
+      "projectName": "ClubesApi",
+      "projectPath": "C:\\Users\\Belen\\OneDrive\\Desktop\\RepoNuevo\\Clubes-api\\TrabajoProyecto.csproj",
       "packagesPath": "C:\\Users\\Belen\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Belen\\OneDrive\\Desktop\\RepoNuevo\\TrabajoProyecto\\obj\\",
+      "outputPath": "C:\\Users\\Belen\\OneDrive\\Desktop\\RepoNuevo\\Clubes-api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

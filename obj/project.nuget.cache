@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nlTwKx0UL0o=",
+  "dgSpecHash": "vW0v344MbM8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Belen\\OneDrive\\Desktop\\RepoNuevo\\TrabajoProyecto\\TrabajoProyecto.csproj",
+  "projectFilePath": "C:\\Users\\Belen\\OneDrive\\Desktop\\RepoNuevo\\Clubes-api\\TrabajoProyecto.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Belen\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\Belen\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",
